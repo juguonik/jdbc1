@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import db.DB;
+import db.DbIntegrityException;
 
 public class Program {
 
@@ -35,7 +36,7 @@ public class Program {
 			e.printStackTrace();
 		*/	
 //		Adicionando infos no banco:
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Connection conn = null;
 		PreparedStatement st = null;
 		try {
@@ -56,20 +57,16 @@ public class Program {
 			st.setInt(5, 4);
 			
 			*/
-// Para atualizar: 			
+		
 			st = conn.prepareStatement(
-					"UPDATE seller "
-					+ "SET BaseSalary = BaseSalary + ? "
+					"DELETE FROM department "
 					+ "WHERE "
-					+ "(DepartmentId = ?)");
+					+ "Id = ?");
 			
-			st.setDouble(1, 200.0);
-			st.setInt(2, 2);
+			st.setInt(1, 2);
+
 			
-//	Tbm para adc:		
-//			st = conn.prepareStatement(
-//					"insert into department (Name) values ('D1'),('D2')",
-//					Statement.RETURN_GENERATED_KEYS);
+
 			int rowsAffected = st.executeUpdate();
 			
 			System.out.println("Done! Rows affected: " + rowsAffected);
@@ -94,7 +91,7 @@ public class Program {
 		*/
 		
 		catch (SQLException e) {
-			e.printStackTrace();
+			throw new DbIntegrityException(e.getMessage());
 		}
 //		catch (ParseException e) {
 //			e.printStackTrace();
