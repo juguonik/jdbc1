@@ -56,12 +56,28 @@ public class Program {
 			st.setInt(5, 4);
 			
 			*/
-			
+// Para atualizar: 			
 			st = conn.prepareStatement(
-					"insert into department (Name) values ('D1'),('D2')",
-					Statement.RETURN_GENERATED_KEYS);
+					"UPDATE seller "
+					+ "SET BaseSalary = BaseSalary + ? "
+					+ "WHERE "
+					+ "(DepartmentId = ?)");
+			
+			st.setDouble(1, 200.0);
+			st.setInt(2, 2);
+			
+//	Tbm para adc:		
+//			st = conn.prepareStatement(
+//					"insert into department (Name) values ('D1'),('D2')",
+//					Statement.RETURN_GENERATED_KEYS);
 			int rowsAffected = st.executeUpdate();
 			
+			System.out.println("Done! Rows affected: " + rowsAffected);
+			
+		}
+		
+//	If para o caso de adc em department	
+			/*
 			if (rowsAffected > 0) {
 				ResultSet rs = st.getGeneratedKeys();
 				while(rs.next()) {
@@ -69,11 +85,14 @@ public class Program {
 					System.out.println("Done! Id = " + id);
 				}
 				
+				
 			}
 			else {
 				System.out.println("No rows affected!");
 			}
-		}
+		} 
+		*/
+		
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
